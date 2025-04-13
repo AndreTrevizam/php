@@ -1,0 +1,42 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: antialiased;
+}
+
+.item-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: .75rem;
+  gap: .5rem;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.line {
+  border: 1px solid rgb(84, 84, 84);
+  width: 100%;
+}
+
+.container {
+  --max-width: 80em;
+  width: min(var(--max-width), 100% - 1.5rem * 2);
+  margin-inline: auto;
+}

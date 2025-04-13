@@ -1,0 +1,9 @@
+import './bootstrap';
+import '../css/global.css'
+import '../css/layout.css'
+import '../css/login.css'
+import '../css/create-product.css'
+import '../css/all-products.css'
+import '../css/create-sale.css'
+import '../css/sale-report.css'
+import '../css/edit-product.css'

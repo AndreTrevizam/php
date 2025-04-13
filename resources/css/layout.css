@@ -1,0 +1,25 @@
+header {
+  background-color: rgb(7, 156, 255);
+  padding: 1rem;
+  color: white;
+  
+  & nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  & button {
+    all: unset;
+    cursor: pointer;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    background-color: white;
+    color: black;
+  }
+}
+
+& footer {
+  margin-bottom: 5rem;
+}

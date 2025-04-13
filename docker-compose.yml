@@ -1,0 +1,12 @@
+services:
+  mysql:
+    image: bitnami/mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: meu_banco
+      MYSQL_USER: user
+      MYSQL_PASSWORD: senha123
+    ports:
+      - "3307:3306"

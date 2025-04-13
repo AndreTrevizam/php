@@ -1,0 +1,32 @@
+.all-products {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+
+  & .product-item {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: rgb(219, 219, 219);
+    align-items: center;
+    border-radius: .25rem;
+
+    & h3 {
+      font-weight: 700;
+    }
+
+    & a {
+      color: black;
+    }
+
+    & button {
+      all: unset;
+      background-color: rgb(228, 56, 56);
+      color: white;
+      cursor: pointer;
+      padding: .5rem;
+      border-radius: .25rem;
+    }
+  }
+}

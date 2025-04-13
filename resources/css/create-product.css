@@ -1,0 +1,28 @@
+.create-product {
+  margin-top: 2rem;
+
+  & form {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    & input,
+    textarea {
+      all: unset;
+      align-items: center;
+      border: 1px solid black;
+      padding: .5rem;
+      border-radius: .25rem;
+    }
+
+    & button {
+      all: unset;
+      cursor: pointer;
+      background-color: rgb(7, 156, 255);
+      padding-inline: 1rem;
+      text-align: center;
+      border-radius: .25rem;
+      color: white;
+    }
+  }
+}
