@@ -12,27 +12,48 @@ class HomeController extends Controller
 {
     public function index() {
         $products = [];
-
+        $salesData = [
+            'groupedSales' => collect(),
+            'totalGeral' => 0,
+            'totalQuantidade' => 0
+        ];
+    
         if (Auth::check()) {
             $user = Auth::user();
             $products = $user->userProducts()->latest()->get();
-
-            // Buscar apenas as vendas de produtos que pertencem ao usuário logado
-            $sales = Sale::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
-                ->whereHas('product', function ($query) use ($user) {
+    
+            // Agrupa vendas por produto
+            $groupedSales = Sale::whereHas('product', function($query) use ($user) {
                     $query->where('user_id', $user->id);
                 })
-                ->groupBy('product_id')
                 ->with('product')
-                ->get();
-        } else {
-            $sales = collect(); // coleção vazia
+                ->get()
+                ->groupBy('product_id');
+    
+            // Calcula totais por produto e gerais
+            $groupedSales = $groupedSales->map(function ($sales, $productId) {
+                $totalQuantity = $sales->sum('quantity');
+                $totalValue = $sales->sum(function($sale) {
+                    return $sale->quantity * $sale->unit_price;
+                });
+                
+                return [
+                    'product' => $sales->first()->product,
+                    'total_quantity' => $totalQuantity,
+                    'total_value' => $totalValue,
+                    'unit_price' => $sales->first()->unit_price // mantemos o preço unitário
+                ];
+            });
+    
+            $salesData = [
+                'groupedSales' => $groupedSales,
+                'totalGeral' => $groupedSales->sum('total_value'),
+                'totalQuantidade' => $groupedSales->sum('total_quantity')
+            ];
         }
-
-        return view('home', [
+    
+        return view('home', array_merge([
             'products' => $products,
-            'sales' => $sales,
-        ]);
+        ], $salesData));
     }
-
 }

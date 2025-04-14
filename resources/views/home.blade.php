@@ -66,37 +66,39 @@
   </div>
 
   <div class="sales-table">
-    <h2>Relatório de Vendas</h1>
-      <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Quantidade Vendida</th>
-            <th>Total (R$)</th>
-          </tr>
-        </thead>
-        <tbody>
-          @php $totalGeral = 0; @endphp
-          @foreach ($sales as $sale)
-            @php
-              $preco = $sale->product->price;
-              $subtotal = $sale->total_quantity * $preco;
-              $totalGeral += $subtotal;
-            @endphp
-            <tr>
-              <td>{{ $sale->product->name }}</td>
-              <td>{{ $sale->total_quantity }}</td>
-              <td>R$ {{ number_format($subtotal, 2, ',', '.') }}</td>
-            </tr>
-          @endforeach
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"><strong>Total Geral</strong></td>
-            <td><strong>R$ {{ number_format($totalGeral, 2, ',', '.') }}</strong></td>
-          </tr>
-        </tfoot>
-      </table>
+    <h2>Relatório de Vendas</h2>
+    
+    @if($groupedSales->isEmpty())
+        <div class="alert alert-info">Nenhuma venda registrada.</div>
+    @else
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Produto</th>
+                    <th class="text-right">Preço Unitário</th>
+                    <th class="text-right">Qtd. Total Vendida</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($groupedSales as $sale)
+                    <tr>
+                        <td>{{ $sale['product']->name ?? 'Produto não encontrado' }}</td>
+                        <td class="text-right">R$ {{ number_format($sale['unit_price'], 2, ',', '.') }}</td>
+                        <td class="text-right">{{ number_format($sale['total_quantity'], 0, ',', '.') }}</td>
+                        <td class="text-right">R$ {{ number_format($sale['total_value'], 2, ',', '.') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
+                <tr class="table-primary">
+                    <th colspan="2">Totais</th>
+                    <th class="text-right">{{ number_format($totalQuantidade, 0, ',', '.') }}</th>
+                    <th class="text-right">R$ {{ number_format($totalGeral, 2, ',', '.') }}</th>
+                </tr>
+            </tfoot>
+        </table>
+    @endif
   </div>
 
   {{-- Se o usuário estiver deslogado exibe isso --}}
